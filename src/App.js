@@ -64,12 +64,9 @@ class App extends Component {
       );
     }
   }
-
 export default App;
 
-class Search extends Component { 
-  render() {
-    const { value, onChange, children } = this.props;
+function Search( { value, onChange, children }) {
     return (
       <form>
         {children} <input
@@ -80,49 +77,37 @@ class Search extends Component {
       </form>
     );
   } 
+
+function Table({ list, pattern, onDismiss }) {
+  return (
+    <div>  
+      {list.filter(isSearched(pattern)).map(item =>
+      <div key={item.objectID}>
+        <span>
+          <a herf={item.url} >{item.title}</a>
+        </span>
+        <span>{item.author}</span>
+        <span>{item.num_comments}</span>
+        <span>{item.points}</span>
+        <span>
+          <button onClick={() => onDismiss(item.objectID)}>
+            Dismiss
+          </button>
+        </span>
+      </div> 
+      )}
+    </div>
+  );
 }
-        
-class Table extends Component {
-  render() {
-    const { list, pattern, onDismiss } = this.props;
-    return (
-      <div>  
-        {list.filter(isSearched(pattern)).map(item =>
-        <div key={item.objectID}>
-          <span>
-            <a herf={item.url} >{item.title}</a>
-          </span>
-          <span>{item.author}</span>
-          <span>{item.num_comments}</span>
-          <span>{item.points}</span>
-          <span>
-            <button onClick={() => onDismiss(item.objectID)}>
-              Dismiss
-            </button>
-          </span>
-        </div> 
-        )}
-      </div>
-    );
-  }
-} 
 
-class Button extends Component {
-  render() {
-    const {
-      onClick,
-      className = '',
-      children,
-    } = this.props;
-
-    return (
-      <button
-        onClick={onClick}
-        className={className}
-        type="button"
-      >
-        {children}
-      </button>
-    );
-  }
+function Button({ onClick, className = '', children }) {
+  return (
+    <button
+      onClick={onClick}
+      className={className}
+      type="button"
+    >
+      {children}
+    </button>
+  );
 }
